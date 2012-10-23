@@ -3,7 +3,7 @@
 name "prod_web"
 description "Production Web Server"
 
-run_list "recipe[apache2]", "recipe[apache2::mod_php5]", "recipe[build-essential]", "recipe[php]", "recipe[skl_web::php_mod_mongo]"
+run_list "recipe[apache2]", "recipe[apache2::mod_php5]", "recipe[build-essential]", "recipe[php]", "recipe[php::module_mysql]", "recipe[php::module_gd]", "recipe[skl_web::php_mod_mongo]"
 
 default_attributes(
     "apache2" => {

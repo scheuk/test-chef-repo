@@ -33,5 +33,6 @@ application "gfgapi" do
 
   passenger_apache2 do
     # Passenger-specific configuration
+    server_aliases ["dev.api.skillabs.com"]
   end
 end

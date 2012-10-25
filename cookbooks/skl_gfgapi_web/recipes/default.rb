@@ -7,6 +7,18 @@
 # All rights reserved - Do Not Redistribute
 #
 
+group "gfgapi-group" do
+  gid 2000
+end
+
+
+user "gfgapi-user" do
+  uid 2000
+  gid 2000
+  home "/srv/gfgapi"
+  shell "/bin/false"
+end
+
 application "gfgapi" do
   path "/srv/gfgapi"
   owner "gfgapi-user"

@@ -3,6 +3,6 @@
 name "base"
 description "Base Packages that all SkilLabs server should have"
 
-run_list "recipe[ubuntu]", "recipe[ntp]", "recipe[logrotate]", "recipe[openssh]", "recipe[chef-client::config]", "recipe[chef-client::service]"
+run_list "recipe[apt]", "recipe[ntp]", "recipe[logrotate]", "recipe[openssh]", "recipe[chef-client::config]", "recipe[chef-client::service]"
 
 

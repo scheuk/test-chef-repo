@@ -7,6 +7,10 @@
 # All rights reserved - Do Not Redistribute
 #
 
+ohai "reload" do
+  action :reload
+end
+
 group "gfgapi-group" do
   gid 2000
 end

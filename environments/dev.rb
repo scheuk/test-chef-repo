@@ -1,2 +1,2 @@
 name "dev"
-description "Devlopment enviornment for dev.api.skillabs.com"
+description "Dev environment for dev.api.skillabs.com and dev.skillabs.com"

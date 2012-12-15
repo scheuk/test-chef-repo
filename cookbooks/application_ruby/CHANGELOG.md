@@ -1,3 +1,12 @@
+## v1.0.6:
+
+* [COOK-1481] - unicorn provider in application_ruby cookbook should run its restart
+  command as root
+
+## v1.0.4:
+
+* [COOK-1572] - allow specification of 'bundle' command via attribute
+
 ## v1.0.2:
 
 * [COOK-1360] - fix typo in README

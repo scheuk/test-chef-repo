@@ -33,7 +33,9 @@ includes the `cacher-client` recipe, so it helps seed itself.
 
 cacher-client
 -------------
-Configures the node to use the `apt-cacher-ng` server as a client.
+Configures the node to use the `apt-cacher-ng` server as a client. If you
+want to restrict your node to using the `apt-cacher-ng` server in your
+Environment, set `['apt']['cacher-client']['restrict_environment']` to `true`.
 
 Resources/Providers
 ===================
@@ -42,8 +44,8 @@ Managing repositories
 ---------------------
 
 This LWRP provides an easy way to manage additional APT repositories.
-Adding a new repository will notify running the
-`execute[apt-get-update]` resource.
+Adding a new repository will notify running the `execute[apt-get-update]`
+resource immediately.
 
 # Actions
 
@@ -59,8 +61,8 @@ Adding a new repository will notify running the
 - components: package groupings..when it doubt use `main`
 - deb_src: whether or not to add the repository as a source repo as
   well - value can be `true` or `false`, default `false`.
-- key_server: the GPG keyserver where the key for the repo should be retrieved
-- key: if a `key_server` is provided, this is assumed to be the
+- keyserver: the GPG keyserver where the key for the repo should be retrieved
+- key: if a `keyserver` is provided, this is assumed to be the
   fingerprint, otherwise it can be either the URI to the GPG key for
   the repo, or a cookbook_file.
 - cookbook: if key should be a cookbook_file, specify a cookbook where
@@ -167,6 +169,9 @@ that need the sources in the template.
 Put `recipe[apt::cacher-ng]` in the run_list for a server to provide
 APT caching and add `recipe[apt::cacher-client]` on the rest of the
 Debian-based nodes to take advantage of the caching server.
+
+If you want to cleanup unused packages, there is also the `apt-get autoclean`
+and `apt-get autoremove` resources provided for automated cleanup.
 
 License and Author
 ==================

@@ -10,6 +10,6 @@ default_attributes(
         }
     },
    "skl_gfgapi_web" => {
-      env => ["dev"]
+      "env" => ["dev"]
     }
 )

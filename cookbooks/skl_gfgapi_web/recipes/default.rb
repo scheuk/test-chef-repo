@@ -29,7 +29,7 @@ end
 
 node['skl_gfgapi_web']['env'].each do |api_env|
   node.set['skl_gfgapi_web']['server_name'] = "#{api_env}.api.skillabs.com"
-  application "gfgapi" do
+  application "#{api_env}-gfgapi" do
     path "/srv/gfgapi/#{api_env}"
     owner "gfgapi-user"
     group "gfgapi-group"

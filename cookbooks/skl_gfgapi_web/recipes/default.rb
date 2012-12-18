@@ -48,6 +48,7 @@ node['skl_gfgapi_web']['env'].each do |api_env|
     passenger_apache2 do
       # Passenger-specific configuration
       #server_aliases ["dev.api.skillabs.com"]
+      webapp_template "gfgapi.conf.erb"
     end
   end
 end

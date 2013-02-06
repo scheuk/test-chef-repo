@@ -1,11 +1,8 @@
 #
-# Author:: Joshua Timberman (<joshua@opscode.com>)
 # Cookbook Name:: yum
-# Recipe:: epel
+# Attributes:: remi
 #
-# Copyright:: Copyright (c) 2011 Opscode, Inc.
-# Copyright 2010, Eric G. Wolfe
-# Copyright 2010, Tippr Inc.
+# Copyright 2011, Opscode, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -18,15 +15,14 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+#
 
-yum_key node['yum']['epel']['key'] do
-  url  node['yum']['epel']['key_url']
-  action :add
+case node['platform']
+when "fedora"
+  default['yum']['remi']['url'] = "http://rpms.famillecollet.com/fedora/#{node['platform_version'].to_i}/remi/mirror"
+else
+  default['yum']['remi']['url'] = "http://rpms.famillecollet.com/enterprise/#{node['platform_version'].to_i}/remi/mirror"
 end
 
-yum_repository "epel" do
-  description "Extra Packages for Enterprise Linux"
-  key node['yum']['epel']['key']
-  mirrorlist node['yum']['epel']['url']
-  action platform?('amazon') ? [:add, :update] : :add
-end
+default['yum']['remi']['key'] = "RPM-GPG-KEY-remi"
+default['yum']['remi']['key_url'] = "http://rpms.famillecollet.com/#{node['yum']['remi']['key']}"

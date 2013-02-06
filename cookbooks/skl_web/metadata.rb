@@ -7,4 +7,4 @@ version          "0.0.2"
 
 depends "php"
 depends "apache2"
-depents "git"
+depends "git"

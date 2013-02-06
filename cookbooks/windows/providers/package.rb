@@ -120,7 +120,8 @@ def install_package(name,version)
   Chef::Log.debug("Processing #{@new_resource} as a #{installer_type} installer.")
   install_args = [cached_file(@new_resource.source, @new_resource.checksum), expand_options(unattended_installation_flags), expand_options(@new_resource.options)]
   Chef::Log.info("Starting installation...this could take awhile.")
-  shell_out!(sprintf(install_command_template, *install_args), {:returns => [0,42,127]})
+  Chef::Log.debug "Install command: #{ sprintf(install_command_template, *install_args) }"
+  shell_out!(sprintf(install_command_template, *install_args), {:timeout => @new_resource.timeout, :returns => [0,42,127]})
 end
 
 def remove_package(name, version)
@@ -131,7 +132,7 @@ def remove_package(name, version)
       "#{uninstall_string} /qn"
     else
       uninstall_string.gsub!('"','')
-      "start /wait /d\"#{::File.dirname(uninstall_string)}\" #{::File.basename(uninstall_string)}#{expand_options(@new_resource.options)} /S"
+      "start \"\" /wait /d\"#{::File.dirname(uninstall_string)}\" #{::File.basename(uninstall_string)}#{expand_options(@new_resource.options)} /S"
     end
   end
   Chef::Log.info("Removing #{@new_resource} with uninstall command '#{uninstall_command}'")
@@ -143,9 +144,9 @@ private
 def install_command_template
   case installer_type
   when :msi
-    "msiexec%2$s %1$s%3$s"
+    "msiexec%2$s \"%1$s\"%3$s"
   else
-    "start /wait %1$s%2$s%3$s"
+    "start \"\" /wait %1$s%2$s%3$s"
   end
 end
 
@@ -154,7 +155,7 @@ def uninstall_command_template
   when :msi
     "msiexec %2$s %1$s"
   else
-    "start /wait /d%1$s %2$s %3$s"
+    "start \"\" /wait /d%1$s %2$s %3$s"
   end
 end
 
@@ -223,7 +224,7 @@ def installer_type
     if @new_resource.installer_type
       @new_resource.installer_type
     else
-      basename = ::File.basename(cached_file(@new_resource.source))
+      basename = ::File.basename(cached_file(@new_resource.source, @new_resource.checksum))
       if basename.split(".").last == "msi" # Microsoft MSI
         :msi
       else

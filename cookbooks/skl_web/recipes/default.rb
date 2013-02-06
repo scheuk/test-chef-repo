@@ -31,3 +31,35 @@ node['skl_web']['env'].each do |api_env|
     template "gfg.conf.erb"
   end
 end
+
+if ['skl_web']['env'].include? "dev"
+
+  directory "/srv/git_temp/gfgflash" do
+    recursive true
+    action :create
+    owner "gfg-user"
+    group "gfg-group"
+  end
+
+  cookbook_file "/srv/git_temp/ssh-wrapper.sh" do
+    source "ssh-wrapper.sh"
+    mode 0755
+  end
+
+  cookbook_file "/srv/git_temp/ssh_git_deploy.pem" do
+    source "ssh_git_deploy.pem"
+    mode 0644
+  end
+
+  git "/srv/git_temp/gfgflash" do
+    repository "git@github.com:SKILLabs/gfg_flash.git"
+    action :sync
+    reference "master"
+    ssh_wrapper "/srv/git_temp/ssh-wrapper.sh"
+  end
+
+  execute "rsync dist to dev" do
+    command "rsync -a --delete /srv/git_temp/gfgflash/dist/ /src/gfg/dev"
+  end
+
+end

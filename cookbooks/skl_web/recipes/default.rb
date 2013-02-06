@@ -48,7 +48,7 @@ if node['skl_web']['env'].include?("dev")
 
   cookbook_file "/srv/git_temp/ssh_git_deploy.pem" do
     source "ssh_git_deploy.pem"
-    mode 0644
+    mode 0600
   end
 
   include_recipe "git"

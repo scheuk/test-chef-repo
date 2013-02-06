@@ -51,6 +51,8 @@ if node['skl_web']['env'].include?("dev")
     mode 0644
   end
 
+  include_recipe "git"
+
   git "/srv/git_temp/gfgflash" do
     repository "git@github.com:SKILLabs/gfg_flash.git"
     action :sync

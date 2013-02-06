@@ -32,7 +32,7 @@ node['skl_web']['env'].each do |api_env|
   end
 end
 
-if ['skl_web']['env'].include? "dev"
+if node['skl_web']['env'].include?("dev")
 
   directory "/srv/git_temp/gfgflash" do
     recursive true

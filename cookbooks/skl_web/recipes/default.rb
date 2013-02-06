@@ -61,7 +61,7 @@ if node['skl_web']['env'].include?("dev")
   end
 
   execute "rsync dist to dev" do
-    command "rsync -a --delete /srv/git_temp/gfgflash/dist/ /src/gfg/dev"
+    command "rsync -a --delete /srv/git_temp/gfgflash/dist/ /srv/gfg/dev"
   end
 
 end

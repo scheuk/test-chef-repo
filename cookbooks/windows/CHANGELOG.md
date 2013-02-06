@@ -5,7 +5,63 @@
 * [COOK-666] `windows_package` should support CoApp packages
 * windows_registry :force_modify action should use RegNotifyChangeKeyValue from WinAPI
 * WindowsRebootHandler/`windows_reboot` LWRP should support kicking off subsequent chef run on reboot.
-* Support all types of registry keys with `type` parameter in `windows_registry`.
+
+## v1.8.2:
+
+**Important**: Use powershell in nodes expanded run lists to ensure
+  powershell is downloaded, as powershell has a dependency on this
+  cookbook; v1.8.0 created a circular dependency.
+
+* [COOK-2301] - windows 1.8.0 has circular dependency on powershell
+
+## v1.8.0:
+
+* [COOK-2126] - Add checksum attribute to windows_zipfile
+* [COOK-2142] - Add printer and printer_port LWRPs
+* [COOK-2149] - Chef::Log.debug Windows Package command line
+* [COOK-2155] -`windows_package` does not send checksum to
+  `cached_file` in `installer_type`
+
+## v1.7.0:
+
+* [COOK-1745] - allow for newer versions of rubyzip
+
+## v1.6.0:
+
+* [COOK-2048] - undefined method for Falseclass on task :change when
+  action is :nothing (and task doesn't exist)
+* [COOK-2049] - Add `windows_pagefile` resource
+
+## v1.5.0:
+
+* [COOK-1251] - Fix LWRP "NotImplementedError"
+* [COOK-1921] - Task LWRP will return true for resource exists when no
+  other scheduled tasks exist
+* [COOK-1932] - Include :change functionality to windows task lwrp
+
+## v1.4.0:
+
+* [COOK-1571] - windows_package resource (with msi provider) does not
+accept spaces in filename
+* [COOK-1581] - Windows cookbook needs a scheduled tasks LWRP
+* [COOK-1584] - `windows_registry` should support all registry types
+
+## v1.3.4:
+
+* [COOK-1173] - windows_registry throws Win32::Registry::Error for
+  action :remove on a nonexistent key
+* [COOK-1182] - windows package sets start window title instead of
+  quoting a path
+* [COOK-1476] - zipfile lwrp should support :zip action
+* [COOK-1485] - package resource fails to perform install correctly
+  when "source" contains quote
+* [COOK-1519] - add action :remove for path lwrp
+
+## v1.3.2:
+
+* [COOK-1033] - remove the `libraries/ruby_19_patches.rb` file which
+  causes havoc on non-Windows systems.
+* [COOK-811] - add a timeout parameter attribute for `windows_package`
 
 ## v1.3.0:
 

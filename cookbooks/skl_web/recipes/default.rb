@@ -18,22 +18,10 @@ user "gfg-user" do
   shell "/bin/false"
 end
 
-node['skl_web']['env'].each do |api_env|
-  directory "/srv/gfg/#{api_env}" do
-    recursive true
-    action :create
-    owner "gfg-user"
-    group "gfg-group"
-  end
-  web_app "#{api_env}-gfg" do
-    server_name "#{api_env}.skillabs.com"
-    docroot "/srv/gfg/#{api_env}"
-    template "gfg.conf.erb"
-  end
-end
+template_file = "gfg.conf.erb"
 
 if node['skl_web']['env'].include?("dev")
-
+  template_file = "dev-gfg.conf.erb"
   directory "/srv/git_temp/gfgflash" do
     recursive true
     action :create
@@ -64,4 +52,18 @@ if node['skl_web']['env'].include?("dev")
     command "rsync -a --delete /srv/git_temp/gfgflash/dist/ /srv/gfg/dev"
   end
 
+end
+
+node['skl_web']['env'].each do |api_env|
+  directory "/srv/gfg/#{api_env}" do
+    recursive true
+    action :create
+    owner "gfg-user"
+    group "gfg-group"
+  end
+  web_app "#{api_env}-gfg" do
+    server_name "#{api_env}.skillabs.com"
+    docroot "/srv/gfg/#{api_env}"
+    template template_file
+  end
 end
